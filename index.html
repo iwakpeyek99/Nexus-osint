@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#080d18" />
+  <meta name="description" content="NEXUS OSINT — Phone intelligence validation dashboard." />
+  <title>NEXUS OSINT | Phone Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.11.20/bundle/libphonenumber-js.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top" aria-label="NEXUS OSINT home">
+        <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 24V8l20 16V8"/><path d="M6 16h20"/></svg></span>
+        <span><b>NEXUS</b><small>INTELLIGENCE SYSTEM</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav>
+        <a class="nav-item active" href="#lookup"><span class="nav-icon">⌕</span> Phone lookup <span class="nav-pill">01</span></a>
+        <a class="nav-item disabled" href="#modules"><span class="nav-icon">◎</span> Email intelligence <em>SOON</em></a>
+        <a class="nav-item disabled" href="#modules"><span class="nav-icon">⌘</span> Username search <em>SOON</em></a>
+        <a class="nav-item disabled" href="#modules"><span class="nav-icon">◈</span> Digital footprint <em>SOON</em></a>
+      </nav>
+      <div class="side-label tools-label">INTELLIGENCE TOOLS</div>
+      <nav>
+        <a class="nav-item" href="#reputation"><span class="nav-icon">⬡</span> Spam reputation</a>
+        <a class="nav-item" href="#sources"><span class="nav-icon">▤</span> Data sources</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="secure-card"><span class="secure-dot"></span><div><b>LOCAL SESSION</b><small>Input is processed in browser</small></div></div>
+        <div class="version">NEXUS CORE <span>v0.1.0</span></div>
+      </div>
+    </aside>
+
+    <main id="top" class="main">
+      <header class="topbar">
+        <div class="breadcrumb">WORKSPACE <span>/</span> PHONE INTELLIGENCE</div>
+        <div class="top-right"><span class="live-dot"></span><span>SYSTEM READY</span><span class="top-divider"></span><span class="operator">GUEST OPERATOR</span></div>
+      </header>
+
+      <section class="hero" id="lookup">
+        <div class="eyebrow"><span class="eyebrow-line"></span> OPEN SOURCE INTELLIGENCE PLATFORM</div>
+        <h1>Phone <span>Intelligence</span></h1>
+        <p class="hero-copy">Validate a phone number. Inspect its numbering metadata.<br class="desktop-only"> Build an evidence-led intelligence profile.</p>
+
+        <div class="search-panel">
+          <div class="panel-top"><div><span class="panel-index">01</span><span class="panel-title">TARGET IDENTIFIER</span></div><span class="panel-status"><i></i> READY FOR INPUT</span></div>
+          <form id="lookupForm" novalidate>
+            <label for="phoneInput">PHONE NUMBER</label>
+            <div class="input-row">
+              <div class="country-prefix">＋</div>
+              <input id="phoneInput" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Enter number, e.g. 081234567890" maxlength="30" />
+              <button id="searchButton" type="submit"><span>ANALYZE NUMBER</span><b>→</b></button>
+            </div>
+            <div class="input-hint"><span>↳</span> Include country code for best results. Indonesia default: +62.</div>
+            <p id="formError" class="form-error" role="alert" aria-live="polite"></p>
+          </form>
+          <div class="panel-bottom"><span><i class="tiny-lock">▣</i> BROWSER-SIDE VALIDATION</span><span>NO IDENTITY DATABASE CONNECTED</span></div>
+        </div>
+      </section>
+
+      <section id="results" class="results hidden" aria-live="polite">
+        <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> ANALYSIS OUTPUT</div><h2>Lookup report</h2></div><button id="clearButton" class="ghost-button" type="button">CLEAR REPORT ×</button></div>
+        <div class="report-banner"><div class="report-symbol">✓</div><div><b id="resultHeadline">NUMBER ANALYSIS COMPLETE</b><small id="resultSubline">Metadata generated from phone numbering information.</small></div><span class="report-tag">LOCAL ANALYSIS</span></div>
+        <div class="result-grid">
+          <article class="data-card primary-card"><div class="card-label">NORMALIZED NUMBER</div><div id="normalizedNumber" class="big-value mono">—</div><div id="internationalNumber" class="muted-value">—</div></article>
+          <article class="data-card"><div class="card-label">VALIDATION STATUS</div><div id="validity" class="status-value">—</div><div class="card-foot">Numbering-plan validation</div></article>
+          <article class="data-card"><div class="card-label">COUNTRY / REGION</div><div id="country" class="value">—</div><div id="countryCode" class="card-foot">ISO region</div></article>
+          <article class="data-card"><div class="card-label">NUMBER TYPE</div><div id="numberType" class="value">—</div><div class="card-foot">When metadata is available</div></article>
+          <article class="data-card"><div class="card-label">POSSIBLE NUMBER</div><div id="possible" class="value">—</div><div class="card-foot">Length and numbering pattern</div></article>
+          <article class="data-card"><div class="card-label">CARRIER</div><div class="value muted-value">Not queried</div><div class="card-foot">No carrier database connected</div></article>
+        </div>
+        <div class="notice"><span>ⓘ</span><p><b>Interpretation:</b> A valid number does not establish who owns it. This report contains numbering metadata only; it does not identify a subscriber or verify a person's identity.</p></div>
+      </section>
+
+      <section class="lower-grid" id="modules">
+        <article class="module-card" id="reputation"><div class="module-head"><span class="module-icon">⬡</span><span class="module-state">MODULE FRAMEWORK</span></div><h3>Spam Reputation</h3><p>Community reports and verified abuse indicators can be integrated in a later version.</p><div class="module-bottom"><span>NO REPORTS DATABASE</span><b>V0.3</b></div></article>
+        <article class="module-card" id="sources"><div class="module-head"><span class="module-icon">▤</span><span class="module-state">SOURCE REGISTRY</span></div><h3>Evidence Sources</h3><p>Future reports will record source, retrieval time, and evidence quality for each finding.</p><div class="module-bottom"><span>NO EXTERNAL SOURCES</span><b>V0.2</b></div></article>
+        <article class="module-card"><div class="module-head"><span class="module-icon">⌘</span><span class="module-state">COMING LATER</span></div><h3>Investigation Workspace</h3><p>Case notes, saved reports, and controlled access for authorized investigations.</p><div class="module-bottom"><span>NOT CONNECTED</span><b>V0.4</b></div></article>
+      </section>
+      <footer><span>© 2026 NEXUS INTELLIGENCE</span><span>BUILT FOR RESPONSIBLE, EVIDENCE-LED RESEARCH</span><span>V0.1.0</span></footer>
+    </main>
+  </div>
+</body>
+</html>
